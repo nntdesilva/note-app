@@ -30,6 +30,33 @@ const addNotes = (title, body) => {
 	}
 };
 
+const removeNote = (title) => {
+	const notes = fetchNotes();
+	notes.forEach((note, idx) => {
+		if (note.title === title) {
+			notes.splice(idx, 1);
+			saveNotes(notes);
+			console.log('Successfully deleted note!');
+		}
+	});
+};
+
+const listNotes = () => {
+	const notes = fetchNotes();
+	for (const note of notes) {
+		console.log(`${note.title}--->${note.body}`);
+	}
+};
+
+const readNote = (title) => {
+	const notes = fetchNotes();
+	for (const note of notes) {
+		if (note.title === title) {
+			console.log("Here's the note body: " + note.body);
+		}
+	}
+};
+
 const saveNotes = (notes) => {
 	const JSONnotes = JSON.stringify(notes);
 	fs.writeFileSync('notes.json', JSONnotes);
@@ -37,5 +64,8 @@ const saveNotes = (notes) => {
 
 module.exports = {
 	getNotes,
-	addNotes
+	addNotes,
+	removeNote,
+	listNotes,
+	readNote
 };

@@ -15,10 +15,8 @@ const getNotes = () => {
 
 const addNotes = (title, body) => {
 	const notes = fetchNotes();
-	const filteredArr = notes.filter((note) => {
-		return note.title === title;
-	});
-	if (filteredArr.length) {
+	const duplicateNote = notes.find((note) => note.title === title);
+	if (duplicateNote) {
 		console.log('That note is already taken!');
 	} else {
 		notes.push({
@@ -43,17 +41,19 @@ const removeNote = (title) => {
 
 const listNotes = () => {
 	const notes = fetchNotes();
+	console.log('Your notes...');
 	for (const note of notes) {
-		console.log(`${note.title}--->${note.body}`);
+		console.log(note.title);
 	}
 };
 
 const readNote = (title) => {
 	const notes = fetchNotes();
-	for (const note of notes) {
-		if (note.title === title) {
-			console.log("Here's the note body: " + note.body);
-		}
+	const foundNote = notes.find((note) => note.title === title);
+	if (foundNote) {
+		console.log("Here's the note body: " + foundNote.body);
+	} else {
+		console.log('No note was found!');
 	}
 };
 
